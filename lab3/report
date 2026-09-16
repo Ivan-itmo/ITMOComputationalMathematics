@@ -1,0 +1,770 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+\geometry{left=2.5cm, right=1.5cm, top=2cm, bottom=2cm}
+
+% Настройка заголовков
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% Настройка листинга кода
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{\thepage}
+
+\begin{document}
+
+% ========== ТИТУЛЬНЫЙ ЛИСТ ==========
+\begin{titlepage}
+\centering
+{\large Федеральное государственное автономное образовательное учреждение \\ высшего образования «Санкт-Петербургский национальный \\ исследовательский Университет ИТМО»}
+\vspace{1cm}
+
+{\large Факультет программной инженерии и компьютерной техники}
+\vspace{4cm}
+
+{\Large\bfseries Лабораторная работа №3 \\[0.5cm] По вычислительной математике \\[0.5cm] Вариант №2}
+\vspace{4cm}
+
+\begin{flushright}
+Выполнил: Гладышев Иван Станиславович \\
+Группа: Р3213 \\[0.5cm]
+Принимающий работу: Бострикова Дарья Константиновна
+\end{flushright}
+\vfill
+{\large Санкт-Петербург 2026}
+\end{titlepage}
+
+% ========== СОДЕРЖАНИЕ ==========
+\tableofcontents
+\newpage
+
+% ========== 1. ЦЕЛЬ РАБОТЫ ==========
+\section{Цель лабораторной работы}
+Найти приближенное значение определенного интеграла с требуемой точностью различными численными методами:
+\begin{itemize}
+    \item метод прямоугольников (левые, правые, средние);
+    \item метод трапеций;
+    \item метод Симпсона;
+    \item метод Ньютона–Котеса.
+\end{itemize}
+Оценить погрешность вычислений, сравнить полученные результаты с точным значением интеграла.
+\clearpage
+
+% ========== 2. ПОРЯДОК ВЫПОЛНЕНИЯ РАБОТЫ ==========
+\section{Порядок выполнения работы}
+
+\textbf{Ручной счёт:}
+
+\begin{enumerate}
+    \item Вычислить интеграл точно по формуле Ньютона–Лейбница.
+    \item Вычислить интеграл по формуле Ньютона–Котеса при n = 6.
+    \item Вычислить интеграл по формуле средних прямоугольников при n = 10.
+    \item Вычислить интеграл по формуле трапеций при n = 10.
+    \item Вычислить интеграл по формуле Симпсона при n = 10.
+    \item Сравнить полученные результаты с точным значением. Определить относительную погрешность для каждого метода.
+\end{enumerate}
+
+\textbf{Программная реализация:}
+
+\begin{enumerate}
+    \item Реализовать методы прямоугольников (левые, правые, средние), трапеций и Симпсона. Каждый метод оформить в виде отдельной функции.
+    \item Вычисление значений подынтегральной функции оформить в виде отдельной функции.
+    \item Для оценки погрешности и завершения вычислительного процесса использовать правило Рунге.
+    \item Предусмотреть ввод исходных данных (выбор функции, пределы интегрирования, точность) с клавиатуры.
+    \item Вывести на экран полученное значение интеграла и число разбиений, при котором достигнута требуемая точность.
+\end{enumerate}
+
+\textbf{Необязательное задание:}
+
+\begin{enumerate}
+    \item Установить сходимость несобственных интегралов второго рода для двух-трёх функций. Если интеграл расходится, выводить сообщение «Интеграл не существует».
+    \item Если интеграл сходится, реализовать в программе его вычисление численными методами.
+    \item Рассмотреть три случая расположения точки бесконечного разрыва подынтегральной функции: в левой границе интегрирования, в правой границе интегрирования, а также внутри отрезка интегрирования.
+\end{enumerate}
+
+\section{Рабочие формулы методов}
+
+\subsection{Метод левых прямоугольников}
+\[
+\int_a^b f(x)dx \approx h \sum_{i=0}^{n-1} f(x_i), \quad h = \frac{b-a}{n}, \quad x_i = a + i \cdot h
+\]
+
+\subsection{Метод правых прямоугольников}
+\[
+\int_a^b f(x)dx \approx h \sum_{i=1}^{n} f(x_i), \quad h = \frac{b-a}{n}, \quad x_i = a + i \cdot h
+\]
+
+\subsection{Метод средних прямоугольников}
+\[
+\int_a^b f(x)dx \approx h \sum_{i=1}^{n} f\left(x_{i-\frac{1}{2}}\right), \quad h = \frac{b-a}{n}, \quad x_{i-\frac{1}{2}} = a + \left(i - \frac{1}{2}\right) \cdot h
+\]
+
+\subsection{Метод трапеций}
+\[
+\int_a^b f(x)dx \approx h \left( \frac{f(a) + f(b)}{2} + \sum_{i=1}^{n-1} f(x_i) \right), \quad h = \frac{b-a}{n}, \quad x_i = a + i \cdot h
+\]
+
+\subsection{Метод Симпсона (парабол)}
+\[
+\int_a^b f(x)dx \approx \frac{h}{3} \left( f(a) + f(b) + 4 \sum_{i=1}^{n/2} f(x_{2i-1}) + 2 \sum_{i=1}^{n/2 - 1} f(x_{2i}) \right),
+\]
+\[
+h = \frac{b-a}{n}, \quad n - \text{чётное}
+\]
+
+\subsection{Формула Ньютона–Котеса}
+\[
+\int_a^b f(x)dx \approx (b-a) \sum_{i=0}^{n} H_i^{(n)} f(x_i)
+\]
+где \( H_i^{(n)} \) — коэффициенты Котеса. Для \( n = 6 \) коэффициенты равны:
+\[
+H_0 = H_6 = \frac{41}{840}, \quad H_1 = H_5 = \frac{216}{840}, \quad H_2 = H_4 = \frac{27}{840}, \quad H_3 = \frac{272}{840}
+\]
+
+\subsection{Правило Рунге}
+Правило Рунге используется для оценки погрешности численного интегрирования. Если \( I_h \) и \( I_{h/2} \) — приближённые значения интеграла, вычисленные с шагами \( h \) и \( h/2 \), а \( k \) — порядок точности метода (\( k = 2 \) для методов средних прямоугольников и трапеций, \( k = 4 \) для метода Симпсона), то погрешность оценивается по формуле:
+\[
+R \approx \frac{|I_{h/2} - I_h|}{2^k - 1}
+\]
+Вычислительный процесс завершается, когда \( R < \varepsilon \), где \( \varepsilon \) — заданная точность. При этом в качестве приближённого значения интеграла принимается \( I_{h/2} \).
+
+\subsection{Блок-схема алгоритма численного интегрирования}
+
+Ниже представлена блок-схема алгоритма приближённого вычисления определённого интеграла с использованием правила Рунге для оценки погрешности.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{block_scheme.png}
+    \caption{Блок-схема алгоритма численного интегрирования}
+    \label{fig:block_scheme}
+\end{figure}
+
+\subsection{Несобственные интегралы}
+
+\paragraph{Разрыв в левой границе (в точке \(x = a\)):}
+\[
+\int_a^b f(x)dx = \lim_{\sigma \to +0} \int_{a+\sigma}^b f(x)dx, \quad 0 < \sigma < b - a
+\]
+
+\paragraph{Разрыв в правой границе (в точке \(x = b\)):}
+\[
+\int_a^b f(x)dx = \lim_{\sigma \to +0} \int_a^{b-\sigma} f(x)dx, \quad 0 < \sigma < b - a
+\]
+
+\paragraph{Разрыв в обеих границах (в точках \(x = a\) и \(x = b\)):}
+\[
+\int_a^b f(x)dx = \lim_{\sigma_1 \to +0} \lim_{\sigma_2 \to +0} \int_{a+\sigma_1}^{b-\sigma_2} f(x)dx
+\]
+
+\paragraph{Разрыв внутри отрезка (в точке \(c \in [a, b]\)):}
+\[
+\int_a^b f(x)dx = \lim_{\sigma_1 \to +0} \int_a^{c-\sigma_1} f(x)dx + \lim_{\sigma_2 \to +0} \int_{c+\sigma_2}^b f(x)dx
+\]
+
+Если указанные пределы существуют и конечны, интеграл называется \textbf{сходящимся}. Если хотя бы один из пределов не существует или бесконечен, интеграл называется \textbf{расходящимся}.
+
+\clearpage
+% ========== 4. ЛИСТИНГ ПРОГРАММЫ ==========
+\section{Листинг программы}
+
+Программа реализована на языке Java. Основные классы и методы:
+
+\subsection{Класс Integrator}
+Главный класс, содержащий методы численного интегрирования.
+
+\begin{lstlisting}[language=Java, caption=Класс Integrator (основной)]
+package integration;
+
+import function.FunctionChoose;
+
+public final class Integrator {
+    private static final int maxPart = (int) Math.pow(2, 24);
+    private static final int maxDeltaIterations = 60;
+
+    private Integrator() {
+    }
+
+    public static IntegrationResult integrate(
+            FunctionChoose function,
+            double a,
+            double b,
+            IntegrationMethod method,
+            double epsilon,
+            int initialPartitions
+    ) {
+        if (a == b) {
+            return new IntegrationResult(0.0, initialPartitions, 0.0);
+        }
+
+        double left = a;
+        double right = b;
+        if (a > b) {
+            left = b;
+            right = a;
+        }
+
+        FunctionChoose.SingularityCase singularityCase = function.whereGap(left, right);
+        if (singularityCase != FunctionChoose.SingularityCase.NONE) {
+            if (!function.isDesicion(left, right)) {
+                throw new IllegalArgumentException("Интеграл не существует.");
+            }
+            return integrateImproper(function, a, b, method, epsilon, initialPartitions, singularityCase);
+        }
+
+        return integrateProper(function, a, b, method, epsilon, initialPartitions);
+    }
+
+    private static IntegrationResult integrateProper(
+            FunctionChoose function,
+            double a,
+            double b,
+            IntegrationMethod method,
+            double epsilon,
+            int initialPartitions
+    ) {
+        int sign = 1;
+        double left = a;
+        double right = b;
+        if (a > b) {
+            sign = -1;
+            left = b;
+            right = a;
+        }
+
+        IntegrationResult result = integrateProperDirect(function, left, right, method, epsilon, initialPartitions);
+        return new IntegrationResult(sign * result.getValue(), result.getParts(), result.getErrorEpsilon());
+    }
+
+    private static IntegrationResult integrateProperDirect(
+            FunctionChoose function,
+            double left,
+            double right,
+            IntegrationMethod method,
+            double epsilon,
+            int initialPartitions
+    ) {
+        int n = initialPartitions;
+        if (method == IntegrationMethod.SIMPSON && n % 2 != 0) {
+            n++;
+        }
+
+        double previous = integrateChoose(function, left, right, n, method);
+
+        while (n <= maxPart / 2) {
+            int newN = n * 2;
+            double current = integrateChoose(function, left, right, newN, method);
+            double rungeError = Math.abs(current - previous) / (Math.pow(2, method.getOrder()) - 1);
+
+            if (rungeError <= epsilon) {
+                return new IntegrationResult(current, newN, rungeError);
+            }
+
+            n = newN;
+            previous = current;
+        }
+
+        throw new IllegalArgumentException("Не удалось достичь заданной точности. Попробуйте увеличить epsilon.");
+    }
+
+    private static IntegrationResult integrateImproper(
+            FunctionChoose function,
+            double a,
+            double b,
+            IntegrationMethod method,
+            double epsilon,
+            int initialPartitions,
+            FunctionChoose.SingularityCase singularityCase
+    ) {
+        int sign = 1;
+        double left = a;
+        double right = b;
+        if (a > b) {
+            sign = -1;
+            left = b;
+            right = a;
+        }
+
+        double intervalLength = right - left;
+        Double singularPoint = function.getGapPoint();
+        if (singularPoint == null) {
+            throw new IllegalArgumentException("Точка разрыва не определена для несобственного интеграла.");
+        }
+
+        double delta = switch (singularityCase) {
+            case AT_A, AT_B -> intervalLength / 4.0;
+            case INSIDE -> Math.min(singularPoint - left, right - singularPoint) / 2.0;
+            case NONE -> throw new IllegalStateException("Разрыв не обнаружен.");
+        };
+        if (!(delta > 0.0)) {
+            throw new IllegalArgumentException("Некорректный интервал для несобственного интеграла.");
+        }
+
+        IntegrationResult previous = integrateImproperDelta(
+                function, left, right, singularPoint, singularityCase, method, epsilon / 4.0, initialPartitions, delta
+        );
+
+        for (int i = 0; i < maxDeltaIterations; i++) {
+            delta /= 2.0;
+            IntegrationResult current = integrateImproperDelta(
+                    function, left, right, singularPoint, singularityCase, method, epsilon / 4.0, initialPartitions, delta
+            );
+
+            double tailError = Math.abs(current.getValue() - previous.getValue());
+            double totalError = tailError + current.getErrorEpsilon();
+            if (totalError <= epsilon) {
+                return new IntegrationResult(sign * current.getValue(), current.getParts(), totalError);
+            }
+
+            previous = current;
+            if (delta <= Math.ulp(1.0) * Math.max(1.0, intervalLength)) {
+                break;
+            }
+        }
+
+        throw new IllegalArgumentException("Не удалось достичь заданной точности для несобственного интеграла.");
+    }
+
+    private static IntegrationResult integrateImproperDelta(
+            FunctionChoose function,
+            double left,
+            double right,
+            double singularPoint,
+            FunctionChoose.SingularityCase singularityCase,
+            IntegrationMethod method,
+            double epsilon,
+            int initialPartitions,
+            double delta
+    ) {
+        return switch (singularityCase) {
+            case AT_A -> integrateProperDirect(function, left + delta, right, method, epsilon, initialPartitions);
+            case AT_B -> integrateProperDirect(function, left, right - delta, method, epsilon, initialPartitions);
+            case INSIDE -> {
+                IntegrationResult leftResult = integrateProperDirect(function, left, singularPoint - delta, method, epsilon / 2.0, initialPartitions);
+                IntegrationResult rightResult = integrateProperDirect(function, singularPoint + delta, right, method, epsilon / 2.0, initialPartitions);
+                double value = leftResult.getValue() + rightResult.getValue();
+                int parts = Math.max(leftResult.getParts(), rightResult.getParts());
+                double runge = leftResult.getErrorEpsilon() + rightResult.getErrorEpsilon();
+                yield new IntegrationResult(value, parts, runge);
+            }
+            case NONE -> throw new IllegalStateException("Разрыв не обнаружен.");
+        };
+    }
+
+    public static double integrateChoose(FunctionChoose function, double a, double b, int n, IntegrationMethod method) {
+        if (n <= 0) {
+            throw new IllegalArgumentException("Число разбиений должно быть положительным.");
+        }
+
+        return switch (method) {
+            case LEFT_RECTANGLES -> leftRectangles(function, a, b, n);
+            case RIGHT_RECTANGLES -> rightRectangles(function, a, b, n);
+            case MIDDLE_RECTANGLES -> middleRectangles(function, a, b, n);
+            case TRAPEZOID -> trapezoid(function, a, b, n);
+            case SIMPSON -> simpson(function, a, b, n);
+        };
+    }
+
+    private static double leftRectangles(FunctionChoose function, double a, double b, int n) {
+        double h = (b - a) / n;
+        double sum = 0.0;
+        for (int i = 0; i < n; i++) {
+            sum += function.calculate(a + i * h);
+        }
+        return sum * h;
+    }
+
+    private static double rightRectangles(FunctionChoose function, double a, double b, int n) {
+        double h = (b - a) / n;
+        double sum = 0.0;
+        for (int i = 1; i <= n; i++) {
+            sum += function.calculate(a + i * h);
+        }
+        return sum * h;
+    }
+
+    private static double middleRectangles(FunctionChoose function, double a, double b, int n) {
+        double h = (b - a) / n;
+        double sum = 0.0;
+        for (int i = 0; i < n; i++) {
+            sum += function.calculate(a + (i + 0.5) * h);
+        }
+        return sum * h;
+    }
+
+    private static double trapezoid(FunctionChoose function, double a, double b, int n) {
+        double h = (b - a) / n;
+        double sum = (function.calculate(a) + function.calculate(b)) / 2.0;
+        for (int i = 1; i < n; i++) {
+            sum += function.calculate(a + i * h);
+        }
+        return sum * h;
+    }
+
+    private static double simpson(FunctionChoose function, double a, double b, int n) {
+        if (n % 2 != 0) {
+            throw new IllegalArgumentException("Для метода Симпсона число разбиений должно быть четным.");
+        }
+
+        double h = (b - a) / n;
+        double sum = function.calculate(a) + function.calculate(b);
+
+        for (int i = 1; i < n; i++) {
+            double coefficient = (i % 2 == 0) ? 2.0 : 4.0;
+            sum += coefficient * function.calculate(a + i * h);
+        }
+
+        return sum * h / 3.0;
+    }
+}
+\end{lstlisting}
+
+% ========== 5. РЕЗУЛЬТАТЫ ВЫПОЛНЕНИЯ ПРОГРАММЫ ==========
+\section{Результаты выполнения программы}
+
+Ниже приведены примеры работы программы для различных функций, методов и пределов интегрирования.
+
+\subsection{Пример 1. Вычисление собственного интеграла}
+
+\begin{verbatim}
+Численное интегрирование
+
+Выберите функцию:
+1. x^2
+2. x^3 - 2x + 1
+3. sin(x)
+4. e^x
+5. 1 / (x^2 + 1)
+6. 1 / sqrt(x)
+7. 1 / sqrt(1 - x)
+8. 1 / sqrt(|x - 0.5|)
+9. 1 / |x - 0.5|
+Введите номер функции: 1
+
+Выберите метод интегрирования:
+1. Метод левых прямоугольников
+2. Метод правых прямоугольников
+3. Метод средних прямоугольников
+4. Метод трапеций
+5. Метод Симпсона
+Введите номер метода: 3
+
+Введите нижний предел интегрирования a: -1
+Введите верхний предел интегрирования b: 1
+Введите требуемую точность epsilon: 0.01
+
+Результат:
+Функция: x^2
+Метод: Метод средних прямоугольников
+Интеграл на [-1.000000; 1.000000] = 0.6640625000
+Число разбиений n = 16
+Оценка погрешности по правилу Рунге: 2.6041666667e-03
+\end{verbatim}
+
+\clearpage
+\subsection{Пример 2. Вычисление сходящегося несобственного интеграла}
+
+\begin{verbatim}
+Численное интегрирование
+
+Выберите функцию:
+1. x^2
+2. x^3 - 2x + 1
+3. sin(x)
+4. e^x
+5. 1 / (x^2 + 1)
+6. 1 / sqrt(x)
+7. 1 / sqrt(1 - x)
+8. 1 / sqrt(|x - 0.5|)
+9. 1 / |x - 0.5|
+Введите номер функции: 6
+
+Выберите метод интегрирования:
+1. Метод левых прямоугольников
+2. Метод правых прямоугольников
+3. Метод средних прямоугольников
+4. Метод трапеций
+5. Метод Симпсона
+Введите номер метода: 1
+
+Введите нижний предел интегрирования a: 0
+Введите верхний предел интегрирования b: 1
+Введите требуемую точность epsilon: 0.01
+
+Результат:
+Функция: 1 / sqrt(x)
+Метод: Метод левых прямоугольников
+Интеграл на [0.000000; 1.000000] = 1.9863929464
+Число разбиений n = 32768
+Оценка погрешности по правилу Рунге: 9.2629790138e-03
+\end{verbatim}
+
+\clearpage
+\subsection{Пример 3. Расходящийся несобственный интеграл}
+
+\begin{verbatim}
+Численное интегрирование
+
+Выберите функцию:
+1. x^2
+2. x^3 - 2x + 1
+3. sin(x)
+4. e^x
+5. 1 / (x^2 + 1)
+6. 1 / sqrt(x)
+7. 1 / sqrt(1 - x)
+8. 1 / sqrt(|x - 0.5|)
+9. 1 / |x - 0.5|
+Введите номер функции: 6
+
+Выберите метод интегрирования:
+1. Метод левых прямоугольников
+2. Метод правых прямоугольников
+3. Метод средних прямоугольников
+4. Метод трапеций
+5. Метод Симпсона
+Введите номер метода: 1
+
+Введите нижний предел интегрирования a: -1
+Введите верхний предел интегрирования b: 1
+Введите требуемую точность epsilon: 0.01
+
+Ошибка: Не удалось достичь заданной точности. Попробуйте увеличить 
+epsilon.
+\end{verbatim}
+
+
+\clearpage
+% ========== ВЫЧИСЛЕНИЕ ЗАДАННОГО ИНТЕГРАЛА ==========
+\section{Вычисление заданного интеграла}
+
+Задан интеграл:
+\[
+\int_{-3}^{-1} (-3x^3 - 5x^2 + 4x - 2) \, dx
+\]
+
+\subsection{Точное вычисление}
+Для точного вычисления определённого интеграла используется формула Ньютона–Лейбница:
+\[
+\int_a^b f(x)dx = F(b) - F(a),
+\]
+где \( F(x) \) — первообразная функции \( f(x) \).
+
+Находим первообразную:
+\[
+F(x) = \int (-3x^3 - 5x^2 + 4x - 2) dx = -\frac{3x^4}{4} - \frac{5x^3}{3} + 2x^2 - 2x + C
+\]
+
+Вычисляем значения первообразной в верхнем и нижнем пределах:
+\[
+F(-1) = -\frac{3 \cdot 1}{4} - \frac{5 \cdot (-1)}{3} + 2 \cdot 1 - 2 \cdot (-1) = -\frac{3}{4} + \frac{5}{3} + 2 + 2 = \frac{59}{12}
+\]
+\[
+F(-3) = -\frac{3 \cdot 81}{4} - \frac{5 \cdot (-27)}{3} + 2 \cdot 9 - 2 \cdot (-3) = -\frac{243}{4} + 45 + 18 + 6 = \frac{33}{4}
+\]
+
+Точное значение интеграла:
+\[
+I_{\text{точн}} = F(-1) - F(-3) = \frac{59}{12} - \frac{33}{4} = \frac{59}{12} - \frac{99}{12} = -\frac{40}{12} = -\frac{10}{3} \approx -3.3333333333
+\]
+
+\clearpage
+\subsection{Метод Ньютона–Котеса (n = 6)}
+Формула Ньютона–Котеса имеет вид:
+\[
+\int_a^b f(x)dx \approx (b-a) \sum_{i=0}^{n} H_i^{(n)} f(x_i),
+\]
+где \( H_i^{(n)} \) — коэффициенты Котеса. При \( n = 6 \) коэффициенты равны:
+\[
+H_0 = H_6 = \frac{41}{840}, \quad H_1 = H_5 = \frac{216}{840}, \quad H_2 = H_4 = \frac{27}{840}, \quad H_3 = \frac{272}{840}
+\]
+
+Шаг разбиения: \( h = \dfrac{b-a}{n} = \dfrac{2}{6} = \dfrac{1}{3} \)
+
+Узлы интегрирования: \( x_i = a + i \cdot h = -3 + i \cdot \dfrac{1}{3} \)
+
+Значения функции в узлах:
+\[
+\begin{array}{c|c|c}
+i & x_i & y_i = f(x_i) \\ \hline
+0 & -3 & 22 \\
+1 & -\frac{8}{3} \approx -2.666667 & 8.6666 \\
+2 & -\frac{7}{3} \approx -2.333333 & -0.4444 \\
+3 & -2 & -6 \\
+4 & -\frac{5}{3} \approx -1.666667 & -8.6667 \\
+5 & -\frac{4}{3} \approx -1.333333 & -9.1111 \\
+6 & -1 & -8
+\end{array}
+\]
+
+Подставляем в формулу:
+\[
+I_{\text{Котес}} = 2 \cdot \frac{1}{840} \big( 41 \cdot 22 + 216 \cdot 8.6666 + 27 \cdot (-0.4444) + 272 \cdot (-6)
+\]
+\[
++ 27 \cdot (-8.6667) + 216 \cdot (-9.1111) + 41 \cdot (-8) \big)
+\]
+
+После вычислений получаем:
+\[
+I_{\text{Котес}} = -\frac{10}{3} \approx -3.33333333
+\]
+
+Результат совпадает с точным значением, поэтому относительная погрешность равна \( 0\% \).
+
+\clearpage
+\subsection{Метод средних прямоугольников (n = 10)}
+Формула метода средних прямоугольников:
+\[
+\int_a^b f(x)dx \approx h \sum_{i=1}^{n} f\left(x_{i-1/2}\right),
+\]
+где \( h = \dfrac{b-a}{n} \), \( x_{i-1/2} = a + \left(i - \dfrac{1}{2}\right)h \).
+
+Шаг разбиения: \( h = \dfrac{2}{10} = 0.2 \)
+
+Вычисляем значения функции в средних точках каждого подынтервала и суммируем их. Полученная сумма:
+\[
+\sum_{i=1}^{10} f\left(x_{i-1/2}\right) = -17.1
+\]
+
+Тогда:
+\[
+I_{\text{ср.прям}} = 0.2 \cdot (-17.1) = -3.42
+\]
+
+Относительная погрешность:
+\[
+\delta = \frac{|I_{\text{точн}} - I_{\text{ср.прям}}|}{|I_{\text{точн}}|} \cdot 100\% = \frac{0.086667}{3.333333} \cdot 100\% \approx 2.6\%
+\]
+
+\clearpage
+\subsection{Метод трапеций (n = 10)}
+Формула метода трапеций:
+\[
+\int_a^b f(x)dx \approx h \left( \frac{f(a) + f(b)}{2} + \sum_{i=1}^{n-1} f(x_i) \right),
+\]
+где \( h = \dfrac{b-a}{n} \), \( x_i = a + i \cdot h \).
+
+Шаг разбиения: \( h = 0.2 \)
+
+Значения функции в узлах:
+\[
+\begin{array}{c|c}
+x_i & y_i \\ \hline
+-3.0 & 22 \\
+-2.8 & 13.456 \\
+-2.6 & 6.528 \\
+-2.4 & 1.072 \\
+-2.2 & -3.056 \\
+-2.0 & -6 \\
+-1.8 & -7.904 \\
+-1.6 & -8.912 \\
+-1.4 & -9.168 \\
+-1.2 & -8.816 \\
+-1.0 & -8
+\end{array}
+\]
+
+Сумма значений функции во внутренних узлах:
+\[
+\sum_{i=1}^{9} y_i = -22.8
+\]
+
+Полусумма крайних значений:
+\[
+\frac{y_0 + y_{10}}{2} = \frac{22 + (-8)}{2} = 7
+\]
+
+Тогда:
+\[
+I_{\text{трап}} = 0.2 \cdot (7 - 22.8) = 0.2 \cdot (-15.8) = -3.16
+\]
+
+Относительная погрешность:
+\[
+\delta = \frac{|I_{\text{точн}} - I_{\text{трап}}|}{|I_{\text{точн}}|} \cdot 100\% = \frac{0.173333}{3.333333} \cdot 100\% \approx 5.2\%
+\]
+
+\clearpage
+\subsection{Метод Симпсона (n = 10)}
+Формула метода Симпсона (при чётном \( n \)):
+\[
+\int_a^b f(x)dx \approx \frac{h}{3} \left( f(a) + f(b) + 4 \sum_{\text{нечёт}} f(x_i) + 2 \sum_{\text{чёт}} f(x_i) \right),
+\]
+где \( h = \dfrac{b-a}{n} \), \( n \) — чётное.
+
+Шаг разбиения: \( h = 0.2 \)
+
+Используем значения функции из таблицы метода трапеций.
+
+Сумма значений на нечётных индексах (\( i = 1, 3, 5, 7, 9 \)):
+\[
+y_1 + y_3 + y_5 + y_7 + y_9 = 13.456 + 1.072 + (-6) + (-8.912) + (-8.816) = -9.2
+\]
+
+Сумма значений на чётных индексах (\( i = 2, 4, 6, 8 \)):
+\[
+y_2 + y_4 + y_6 + y_8 = 6.528 + (-3.056) + (-7.904) + (-9.168) = -13.6
+\]
+
+Подставляем в формулу:
+\[
+I_{\text{Симпс}} = \frac{0.2}{3} \left( 22 + (-8) + 4 \cdot (-9.2) + 2 \cdot (-13.6) \right)
+\]
+\[
+I_{\text{Симпс}} = \frac{0.2}{3} \left( 14 - 36.8 - 27.2 \right) = \frac{0.2}{3} \cdot (-50) = -\frac{10}{3} \approx -3.33333333
+\]
+
+Результат совпадает с точным значением, поэтому относительная погрешность равна \( 0\% \).
+
+% ========== 7. ВЫВОДЫ ==========
+\clearpage
+\section{Выводы}
+
+В ходе выполнения лабораторной работы была реализована программа, которая вычисляет определённые интегралы следующими численными методами: метод левых прямоугольников, метод правых прямоугольников, метод средних прямоугольников, метод трапеций, метод Симпсона. Также программа поддерживает вычисление несобственных интегралов второго рода с автоматической проверкой сходимости и обработкой точек разрыва подынтегральной функции (в левой границе, в правой границе или внутри отрезка интегрирования).
+
+В рамках ручного счёта для интеграла \( \int_{-3}^{-1} (-3x^3 - 5x^2 + 4x - 2) dx \) были получены следующие результаты: метод Ньютона–Котеса при \( n = 6 \) и метод Симпсона при \( n = 10 \) дали точное значение \( -\frac{10}{3} \) (погрешность \( 0\% \)), метод средних прямоугольников при \( n = 10 \) дал погрешность около \( 2.6\% \), а метод трапеций — около \( 5.2\% \). Таким образом, наиболее точными в данном случае оказались метод Симпсона и метод Ньютона–Котеса.
+
+Сравнивая методы между собой, можно отметить, что метод Симпсона обеспечивает высокую точность при относительно небольшом числе разбиений, однако он сложнее в реализации и требует чётного числа разбиений. Методы прямоугольников и трапеций проще в реализации и понимании, но для достижения той же точности им требуется значительно большее число разбиений, что увеличивает время вычислений. Метод Ньютона–Котеса высокого порядка даёт хорошую точность, но требует использования табличных коэффициентов и не всегда удобен для программной реализации. Для практического использования оптимальным является метод Симпсона, сочетающий хорошую точность и приемлемую сложность реализации.
+
+\end{document}

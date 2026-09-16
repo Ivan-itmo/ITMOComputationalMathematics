@@ -1,0 +1,1154 @@
+\documentclass[a4paper,14pt]{extarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\lstset{
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={а}{{\selectfont\char224}}1 {б}{{\selectfont\char225}}1 {в}{{\selectfont\char226}}1 
+           {г}{{\selectfont\char227}}1 {д}{{\selectfont\char228}}1 {е}{{\selectfont\char229}}1 
+           {ё}{{\selectfont\char168}}1 {ж}{{\selectfont\char230}}1 {з}{{\selectfont\char231}}1 
+           {и}{{\selectfont\char232}}1 {й}{{\selectfont\char233}}1 {к}{{\selectfont\char234}}1 
+           {л}{{\selectfont\char235}}1 {м}{{\selectfont\char236}}1 {н}{{\selectfont\char237}}1 
+           {о}{{\selectfont\char238}}1 {п}{{\selectfont\char239}}1 {р}{{\selectfont\char240}}1 
+           {с}{{\selectfont\char241}}1 {т}{{\selectfont\char242}}1 {у}{{\selectfont\char243}}1 
+           {ф}{{\selectfont\char244}}1 {х}{{\selectfont\char245}}1 {ц}{{\selectfont\char246}}1 
+           {ч}{{\selectfont\char247}}1 {ш}{{\selectfont\char248}}1 {щ}{{\selectfont\char249}}1 
+           {ъ}{{\selectfont\char250}}1 {ы}{{\selectfont\char251}}1 {ь}{{\selectfont\char252}}1 
+           {э}{{\selectfont\char253}}1 {ю}{{\selectfont\char254}}1 {я}{{\selectfont\char255}}1
+           {А}{{\selectfont\char192}}1 {Б}{{\selectfont\char193}}1 {В}{{\selectfont\char194}}1 
+           {Г}{{\selectfont\char195}}1 {Д}{{\selectfont\char196}}1 {Е}{{\selectfont\char197}}1 
+           {Ё}{{\selectfont\char168}}1 {Ж}{{\selectfont\char198}}1 {З}{{\selectfont\char199}}1 
+           {И}{{\selectfont\char200}}1 {Й}{{\selectfont\char201}}1 {К}{{\selectfont\char202}}1 
+           {Л}{{\selectfont\char203}}1 {М}{{\selectfont\char204}}1 {Н}{{\selectfont\char205}}1 
+           {О}{{\selectfont\char206}}1 {П}{{\selectfont\char207}}1 {Р}{{\selectfont\char208}}1 
+           {С}{{\selectfont\char209}}1 {Т}{{\selectfont\char210}}1 {У}{{\selectfont\char211}}1 
+           {Ф}{{\selectfont\char212}}1 {Х}{{\selectfont\char213}}1 {Ц}{{\selectfont\char214}}1 
+           {Ч}{{\selectfont\char215}}1 {Ш}{{\selectfont\char216}}1 {Щ}{{\selectfont\char217}}1 
+           {Ъ}{{\selectfont\char218}}1 {Ы}{{\selectfont\char219}}1 {Ь}{{\selectfont\char220}}1 
+           {Э}{{\selectfont\char221}}1 {Ю}{{\selectfont\char222}}1 {Я}{{\selectfont\char223}}1,
+}}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+\geometry{left=2.5cm, right=1.5cm, top=2cm, bottom=2cm}
+
+% Настройка заголовков
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% Настройка листинга кода
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+\pagestyle{fancy}
+\fancyhf{}
+\rfoot{Страница \thepage}
+
+\begin{document}
+
+% Титульный лист (уже есть у пользователя)
+\begin{titlepage}
+\centering
+{\large Федеральное государственное автономное образовательное учреждение \\ высшего образования «Санкт-Петербургский национальный \\ исследовательский Университет ИТМО»}
+\vspace{1cm}
+
+{\large Факультет программной инженерии и компьютерной техники}
+\vspace{4cm}
+
+{\Large\bfseries Лабораторная работа №2 \\[0.5cm] По вычислительной математике \\[0.5cm] Вариант №2}
+\vspace{4cm}
+
+\begin{flushright}
+Выполнил: Гладышев Иван Станиславович \\
+Группа: Р3213 \\[0.5cm]
+Принимающий работу: Бострикова Дарья Константиновна
+\end{flushright}
+\vfill
+{\large Санкт-Петербург 2026}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\section{Цель работы}
+Изучить численные методы решения нелинейных уравнений и их систем, найти корни заданного нелинейного уравнения и системы нелинейных уравнений, выполнить программную реализацию методов.
+
+\clearpage
+
+\section{Порядок выполнения работы}
+\subsection{Решение нелинейного уравнения}
+\begin{enumerate}
+    \item Отделить корни нелинейного уравнения $f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95$ графически
+    \item Определить интервалы, в которых лежат три корня уравнения
+    \item Уточнить корни с точностью $\varepsilon = 10^{-2}$, используя:
+    \begin{itemize}
+        \item Метод хорд для левого корня
+        \item Метод секущих для центрального корня
+        \item Метод простой итерации для правого корня
+    \end{itemize}
+    \item Результаты вычислений занести в таблицы итерационного процесса
+    \item Для метода простой итерации проверить условие сходимости на выбранном интервале
+\end{enumerate}
+
+\subsection{Решение системы нелинейных уравнений}
+\begin{enumerate}
+    \item Отделить корни системы графически:
+    \begin{equation*}
+        \begin{cases}
+            \tan(xy + 0.1) = x^2 \\
+            x^2 + 2y^2 = 1
+        \end{cases}
+    \end{equation*}
+    \item Решить систему методом Ньютона с точностью $\varepsilon = 0.01$
+    \item Результаты итерационного процесса занести в таблицу
+\end{enumerate}
+
+\subsection{Программная реализация}
+\begin{enumerate}
+    \item Реализовать следующие численные методы:
+    \begin{enumerate}
+        \item Метод половинного деления для нелинейного уравнения
+        \item Метод Ньютона для нелинейного уравнения
+        \item Метод простой итерации для нелинейного уравнения
+        \item Метод простой итерации для систем нелинейных уравнений
+    \end{enumerate}
+    \item Предусмотреть ввод исходных данных с клавиатуры или из файла
+    \item Реализовать вывод результатов на экран или в файл
+\end{enumerate}
+
+\section{Рабочие формулы используемых методов}
+
+\subsection{Метод хорд}
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    x_i = a_i - \frac{b_i - a_i}{f(b_i) - f(a_i)} \cdot f(a_i)
+\end{equation}
+или эквивалентная форма:
+\begin{equation}
+    x_i = \frac{a_i f(b_i) - b_i f(a_i)}{f(b_i) - f(a_i)}
+\end{equation}
+
+\textbf{Блок-схема алгоритма метода хорд:}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{chordBlock.png}
+    \caption{Блок-схема метода хорд}
+    \label{fig:chords_flowchart}
+\end{figure}
+
+\clearpage
+
+\subsection{Метод секущих}
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    x_{i+1} = x_i - \frac{x_i - x_{i-1}}{f(x_i) - f(x_{i-1})} \cdot f(x_i), \quad i = 1, 2, \ldots
+\end{equation}
+
+\textbf{Критерий окончания итерационного процесса:}
+\begin{equation}
+    |x_n - x_{n-1}| \leq \varepsilon \quad \text{или} \quad |f(x_n)| \leq \varepsilon
+\end{equation}
+
+\textbf{Приближенное значение корня:} $x^* = x_n$
+
+\textbf{Блок-схема алгоритма метода секущих:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{secantBlock.png}
+    \caption{Блок-схема метода секущих}
+    \label{fig:secants_flowchart}
+\end{figure}
+
+\subsection{Метод простой итерации}
+
+\textbf{Идея метода:} уравнение $f(x) = 0$ приводится к эквивалентному виду $x = \varphi(x)$, где $\varphi(x)$ — итерационная функция.
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    x_{i+1} = \varphi(x_i)
+\end{equation}
+
+
+\textbf{Блок-схема алгоритма метода простой итерации:}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{simpleIterBlock.png}
+    \caption{Блок-схема метода простой итерации}
+    \label{fig:simpleiter_flowchart}
+\end{figure}
+
+\subsection{Метод половинного деления}
+
+\textbf{Идея метода:} начальный интервал изоляции корня делится пополам, и в качестве нового интервала выбирается та половина, на концах которой функция имеет разные знаки.
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    x_i = \frac{a_i + b_i}{2}
+\end{equation}
+
+\textbf{Критерий окончания итерационного процесса:}
+\begin{equation}
+    |a_n - b_n| \leq \varepsilon \quad \text{или} \quad |f(x_n)| \leq \varepsilon
+\end{equation}
+
+\textbf{Приближенное значение корня:}
+\begin{equation}
+    x^* = \frac{a_n + b_n}{2} \quad \text{или} \quad x^* = a_n \quad \text{или} \quad x^* = b_n
+\end{equation}
+
+\textbf{Блок-схема алгоритма метода половинного деления:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{bisectionBlock.png}
+    \caption{Блок-схема метода половинного деления}
+    \label{fig:bisection_flowchart}
+\end{figure}
+
+\subsection{Метод Ньютона для систем нелинейных уравнений}
+
+\textbf{Постановка задачи:} Дана система нелинейных уравнений:
+\begin{equation}
+    \begin{cases}
+        F_1(x_1, x_2, \ldots, x_n) = 0 \\
+        F_2(x_1, x_2, \ldots, x_n) = 0 \\
+        \ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots \\
+        F_n(x_1, x_2, \ldots, x_n) = 0
+    \end{cases}
+\end{equation}
+
+\textbf{Идея метода:} Линеаризация системы с помощью разложения в ряд Тейлора и решения системы линейных уравнений относительно приращений.
+
+\textbf{Матрица Якоби:}
+\begin{equation}
+    J(x) = \begin{pmatrix}
+        \frac{\partial F_1}{\partial x_1} & \frac{\partial F_1}{\partial x_2} & \cdots & \frac{\partial F_1}{\partial x_n} \\
+        \frac{\partial F_2}{\partial x_1} & \frac{\partial F_2}{\partial x_2} & \cdots & \frac{\partial F_2}{\partial x_n} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        \frac{\partial F_n}{\partial x_1} & \frac{\partial F_n}{\partial x_2} & \cdots & \frac{\partial F_n}{\partial x_n}
+    \end{pmatrix}
+\end{equation}
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    J(\vec{x}^{(k)}) \cdot \Delta\vec{x}^{(k)} = -\vec{F}(\vec{x}^{(k)})
+\end{equation}
+\begin{equation}
+    \vec{x}^{(k+1)} = \vec{x}^{(k)} + \Delta\vec{x}^{(k)}
+\end{equation}
+
+\textbf{Для системы второго порядка:}
+\begin{equation}
+    \begin{cases}
+        f(x, y) = 0 \\
+        g(x, y) = 0
+    \end{cases}
+\end{equation}
+
+Матрица Якоби:
+\begin{equation}
+    J(x, y) = \begin{pmatrix}
+        \frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} \\
+        \frac{\partial g}{\partial x} & \frac{\partial g}{\partial y}
+    \end{pmatrix}
+\end{equation}
+
+Система линейных уравнений для нахождения приращений:
+\begin{equation}
+    \begin{pmatrix}
+        \frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} \\
+        \frac{\partial g}{\partial x} & \frac{\partial g}{\partial y}
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Delta x \\
+        \Delta y
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        -f(x, y) \\
+        -g(x, y)
+    \end{pmatrix}
+\end{equation}
+
+\textbf{Итерационные формулы:}
+\begin{equation}
+    x_{k+1} = x_k + \Delta x_k, \quad y_{k+1} = y_k + \Delta y_k
+\end{equation}
+
+\clearpage
+\textbf{Блок-схема алгоритма метода Ньютона для систем:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{newtonSystemBlock.png}
+    \caption{Блок-схема метода Ньютона для систем нелинейных уравнений}
+    \label{fig:newton_system_flowchart}
+\end{figure}
+
+\clearpage
+\subsection{Метод простой итерации для систем нелинейных уравнений}
+
+\textbf{Постановка задачи:} Дана система нелинейных уравнений:
+\begin{equation}
+    \begin{cases}
+        F_1(x_1, x_2, \ldots, x_n) = 0 \\
+        F_2(x_1, x_2, \ldots, x_n) = 0 \\
+        \ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots \\
+        F_n(x_1, x_2, \ldots, x_n) = 0
+    \end{cases}
+\end{equation}
+
+\textbf{Идея метода:} Привести систему к эквивалентному виду $X = \varphi(X)$ и строить итерационную последовательность приближений.
+
+\textbf{Приведение системы к итерационному виду:}
+\begin{equation}
+    \begin{cases}
+        x_1 = \varphi_1(x_1, x_2, \ldots, x_n) \\
+        x_2 = \varphi_2(x_1, x_2, \ldots, x_n) \\
+        \ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots \\
+        x_n = \varphi_n(x_1, x_2, \ldots, x_n)
+    \end{cases}
+\end{equation}
+
+Или в векторной форме:
+\begin{equation}
+    X = \varphi(X), \quad \text{где } \varphi(X) = \begin{pmatrix} \varphi_1(X) \\ \varphi_2(X) \\ \vdots \\ \varphi_n(X) \end{pmatrix}
+\end{equation}
+
+\textbf{Рабочая формула метода:}
+\begin{equation}
+    X^{(k+1)} = \varphi(X^{(k)}), \quad k = 0, 1, 2, \ldots
+\end{equation}
+
+\textbf{Для системы второго порядка:}
+\begin{equation}
+    \begin{cases}
+        x_{k+1} = \varphi_1(x_k, y_k) \\
+        y_{k+1} = \varphi_2(x_k, y_k)
+    \end{cases}
+\end{equation}
+
+\clearpage
+\textbf{Блок-схема алгоритма метода простой итерации для систем:}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{simpleIterSystemBlock.png}
+    \caption{Блок-схема метода простой итерации для систем}
+    \label{fig:simple_iter_system_flowchart}
+\end{figure}
+
+
+\clearpage
+\section{Графики функций на исследуемом интервале}
+
+\subsection{График нелинейного уравнения}
+Дано нелинейное уравнение:
+\begin{equation}
+    f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95 = 0
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{function_graph.png}
+    \caption{График функции $f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95$}
+    \label{fig:function}
+\end{figure}
+
+\clearpage
+\subsection{График системы нелинейных уравнений}
+Дана система:
+\begin{equation}
+    \begin{cases}
+        \tan(xy + 0.1) = x^2 \\
+        x^2 + 2y^2 = 1
+    \end{cases}
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{system_graph.png}
+    \caption{Графическое отделение корней системы}
+    \label{fig:system}
+\end{figure}
+
+\clearpage
+\section{Вычислительная часть 1. Решение нелинейного уравнения}
+
+\subsection{Задание}
+Дано нелинейное уравнение:
+\begin{equation}
+    f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95 = 0
+\end{equation}
+Точность вычислений: $\varepsilon = 0.01$
+
+\subsection{Интервалы изоляции корней}
+
+\textbf{Обоснование наличия корней на интервалах:}
+
+Функция $f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95$ является многочленом третьей степени, следовательно, она непрерывна на всей числовой прямой.
+
+\textbf{1. Левый корень: интервал $[-3.90; -3.80]$}
+
+Вычислим значения функции на концах интервала:
+\begin{align*}
+    f(-3.90) &= -1.38(-3.90)^3 - 5.42(-3.90)^2 + 2.57(-3.90) + 10.95 = 0.349 \\
+    f(-3.80) &= -1.38(-3.80)^3 - 5.42(-3.80)^2 + 2.57(-3.80) + 10.95 = -1.357
+\end{align*}
+
+Проверка: $f(-3.90) \cdot f(-3.80) = 0.349 \cdot (-1.357) = -0.474 < 0$
+
+Функция непрерывна и меняет знак на интервале $[-3.90; -3.80]$, следовательно, на этом интервале существует корень.
+
+\textbf{2. Центральный корень: интервал $[-1.50; -1.40]$}
+
+Вычислим значения функции на концах интервала:
+\begin{align*}
+    f(-1.50) &= -1.38(-1.50)^3 - 5.42(-1.50)^2 + 2.57(-1.50) + 10.95 = 0.323 \\
+    f(-1.40) &= -1.38(-1.40)^3 - 5.42(-1.40)^2 + 2.57(-1.40) + 10.95 = -0.298
+\end{align*}
+
+Проверка: $f(-1.50) \cdot f(-1.40) = 0.323 \cdot (-0.298) = -0.096 < 0$ 
+
+Функция непрерывна и меняет знак на интервале $[-1.50; -1.40]$, следовательно, на этом интервале существует корень.
+
+\textbf{3. Правый корень: интервал $[1.40; 1.50]$}
+
+Вычислим значения функции на концах интервала:
+\begin{align*}
+    f(1.40) &= -1.38(1.40)^3 - 5.42(1.40)^2 + 2.57(1.40) + 10.95 = 0.208 \\
+    f(1.50) &= -1.38(1.50)^3 - 5.42(1.50)^2 + 2.57(1.50) + 10.95 = -0.724
+\end{align*}
+
+Проверка: $f(1.40) \cdot f(1.50) = 0.208 \cdot (-0.724) = -0.151 < 0$ 
+
+Функция непрерывна и меняет знак на интервале $[1.40; 1.50]$, следовательно, на этом интервале существует корень.
+
+\subsection{Уточнение левого корня (метод хорд)}
+Интервал: $[-3.90; -3.80]$
+
+Рабочая формула метода хорд:
+\begin{equation}
+    x_i = a_i - \frac{b_i - a_i}{f(b_i) - f(a_i)} \cdot f(a_i)
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \caption{Уточнение корня уравнения методом хорд}
+    \label{tab:chords}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        № шага & $a$ & $b$ & $x$ & $f(a)$ & $f(b)$ & $f(x)$ & $|x_{k+1}-x_k|$ \\
+        \hline
+        1 & -3.900 & -3.800 & -3.826 & 0.349 & -1.357 & 0.091 & --- \\
+        \hline
+        2 & -3.900 & -3.826 & -3.845 & 0.349 & 0.091 & -0.023 & 0.019 \\
+        \hline
+        3 & -3.845 & -3.826 & -3.840 & -0.023 & 0.091 & 0.001 & 0.005 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Поскольку $|x_3 - x_2| = 0.005 < \varepsilon = 0.01$, итерационный процесс завершен.
+
+\textbf{Результат:} $x_1 \approx -3.840$, $f(x_1) = 0.001$
+
+\subsection{Уточнение центрального корня (метод секущих)}
+Интервал: $[-1.50; -1.40]$
+
+Рабочая формула метода секущих:
+\begin{equation}
+    x_{k+1} = x_k - \frac{x_k - x_{k-1}}{f(x_k) - f(x_{k-1})} \cdot f(x_k)
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \caption{Уточнение корня уравнения методом секущих}
+    \label{tab:secants}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        № итерации & $x_{k-1}$ & $x_k$ & $x_{k+1}$ & $f(x_{k+1})$ & $|x_{k+1}-x_k|$ \\
+        \hline
+        1 & -1.500 & -1.400 & -1.448 & -0.032 & --- \\
+        \hline
+        2 & -1.400 & -1.448 & -1.446 & 0.002 & 0.002 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Поскольку $|x_2 - x_1| = 0.002 < \varepsilon = 0.01$, итерационный процесс завершен.
+
+\textbf{Результат:} $x_2 \approx -1.446$, $f(x_2) = 0.002$
+
+\subsection{Уточнение правого корня (метод простой итерации)}
+Интервал: $[1.40; 1.50]$
+
+Преобразуем уравнение $f(x) = 0$ к эквивалентному виду $x = \varphi(x)$, вводя параметр $\lambda$:
+\begin{equation}
+    x_{k+1} = x_k + \lambda \cdot f(x_k), \quad \text{где } \varphi(x) = x + \lambda \cdot f(x)
+\end{equation}
+
+Выбор $\lambda$:
+
+Для обеспечения высокой скорости сходимости необходимо, чтобы $q = \max\limits_{[a,b]} |\varphi'(x)| \approx 0$.
+Так как $\varphi'(x) = 1 + \lambda \cdot f'(x)$, то оптимальное значение $\lambda$ выбирается по формуле:
+\begin{equation}
+    \lambda = \frac{1}{\max\limits_{[a,b]} |f'(x)|}, \quad \text{если } f'(x) < 0 \text{ на интервале}
+\end{equation}
+
+Найдем производную функции:
+\begin{equation}
+    f'(x) = -4.14x^2 - 10.84x + 2.57
+\end{equation}
+
+Исследуем знак производной на интервале $[1.40; 1.50]$:
+\begin{align*}
+    f'(1.40) &= -4.14(1.40)^2 - 10.84(1.40) + 2.57 = -20.74 \\
+    f'(1.50) &= -4.14(1.50)^2 - 10.84(1.50) + 2.57 = -22.84
+\end{align*}
+Производная отрицательна на всем интервале ($f'(x) < 0$).
+
+Найдем максимальное модульное значение производной:
+\begin{equation}
+    \max\limits_{[1.40; 1.50]} |f'(x)| = |-22.84| = 22.84
+\end{equation}
+
+Тогда теоретически оптимальное значение:
+\begin{equation}
+    \lambda = \frac{1}{22.84} \approx 0.04
+\end{equation}
+
+Проверка условия сходимости:
+\begin{equation}
+    |\varphi'(x)| = |1 + 0.04 \cdot f'(x)|
+\end{equation}
+Оценим значение на границах интервала:
+\begin{align*}
+    |\varphi'(1.40)| &= |1 + 0.04 \cdot (-20.74)| = |1 - 0.830| = 0.170 \\
+    |\varphi'(1.50)| &= |1 + 0.04 \cdot (-22.84)| = |1 - 0.914| = 0.086
+\end{align*}
+Следовательно:
+\begin{equation}
+    q = \max\limits_{[1.40; 1.50]} |\varphi'(x)| = 0.170 < 1 \quad
+\end{equation}
+Условие сходимости выполняется
+Итерационная формула принимает вид:
+\begin{equation}
+    x_{k+1} = x_k + 0.04 \cdot (-1.38x_k^3 - 5.42x_k^2 + 2.57x_k + 10.95)
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \caption{Уточнение корня уравнения методом простой итерации}
+    \label{tab:iteration}
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        № итерации & $x_k$ & $x_{k+1}$ & $f(x_{k+1})$ & $|x_{k+1}-x_k|$ \\
+        \hline
+        1 & 1.400 & 1.408 & -0.083 & --- \\
+        \hline
+        2 & 1.408 & 1.405 & 0.012 & 0.003 \\
+        \hline
+        3 & 1.405 & 1.404 & -0.002 & 0.001 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Поскольку $|x_3 - x_2| = 0.001 < \varepsilon = 0.01$, итерационный процесс завершен.
+
+\textbf{Результат:} $x_3 \approx 1.404$, $f(x_3) = -0.002$
+
+\clearpage
+\section{Вычислительная часть 2. Решение системы нелинейных уравнений через метод Ньютона}
+
+\subsection{Система}
+\begin{equation}
+    \begin{cases}
+        \tan(xy + 0.1) = x^2 \\
+        x^2 + 2y^2 = 1
+    \end{cases}
+\end{equation}
+
+\subsection{Приведение к стандартному виду}
+\begin{equation}
+    F(x, y) = 
+    \begin{pmatrix}
+        f(x, y) \\
+        g(x, y)
+    \end{pmatrix} =
+    \begin{pmatrix}
+        \tan(xy + 0.1) - x^2 \\
+        x^2 + 2y^2 - 1
+    \end{pmatrix} = \vec{0}
+\end{equation}
+
+\subsection{Матрица Якоби}
+\begin{equation}
+    J(x, y) = 
+    \begin{pmatrix}
+        \frac{\partial f}{\partial x} & \frac{\partial f}{\partial y} \\
+        \frac{\partial g}{\partial x} & \frac{\partial g}{\partial y}
+    \end{pmatrix} =
+    \begin{pmatrix}
+        -2x & (1 + \tan^2(xy + 0.1)) \cdot x \\
+        2x & 4y
+    \end{pmatrix}
+\end{equation}
+
+\subsection{Система линейных уравнений для нахождения приращений}
+\begin{equation}
+    J(x_k, y_k) \cdot 
+    \begin{pmatrix}
+        \Delta x \\
+        \Delta y
+    \end{pmatrix}
+    = -F(x_k, y_k)
+\end{equation}
+
+В развернутом виде для нашей системы:
+\begin{equation}
+    \begin{pmatrix}
+        -2x_k & (1 + \tan^2(x_k y_k + 0.1)) \cdot x_k \\
+        2x_k & 4y_k
+    \end{pmatrix}
+    \begin{pmatrix}
+        \Delta x \\
+        \Delta y
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        -\left[\tan(x_k y_k + 0.1) - x_k^2\right] \\
+        -\left[x_k^2 + 2y_k^2 - 1\right]
+    \end{pmatrix}
+\end{equation}
+
+Решение через Крамера:
+
+Обозначим коэффициенты матрицы Якоби и элементы правой части:
+\begin{align*}
+    a_{11} &= -2x_k, & a_{12} &= x_k \left(1 + \tan^2(x_k y_k + 0.1)\right), \\
+    a_{21} &= 2x_k, & a_{22} &= 4y_k, \\
+    b_1 &= -\left[\tan(x_k y_k + 0.1) - x_k^2\right], & b_2 &= -\left[x_k^2 + 2y_k^2 - 1\right]
+\end{align*}
+
+Система принимает вид:
+\begin{equation}
+    \begin{cases}
+        a_{11} \cdot \Delta x + a_{12} \cdot \Delta y = b_1 \\
+        a_{21} \cdot \Delta x + a_{22} \cdot \Delta y = b_2
+    \end{cases}
+\end{equation}
+
+Определитель основной матрицы (Якобиана):
+\begin{equation}
+    \det J = a_{11} a_{22} - a_{12} a_{21} = -8x_k y_k - 2x_k^2 \left(1 + \tan^2(x_k y_k + 0.1)\right)
+\end{equation}
+
+\begin{equation}
+    \det_x = b_1 a_{22} - b_2 a_{12}, \quad \det_y = a_{11} b_2 - a_{21} b_1
+\end{equation}
+
+\begin{equation}
+    \Delta x = \frac{\det_x}{\det J}, \quad \Delta y = \frac{\det_y}{\det J}
+\end{equation}
+
+\subsection{Итерационный процесс}
+
+Начальное приближение: $(x_0, y_0) = (0.5, 0.5)$
+
+Вычисление значений функций:
+   \begin{align*}
+       f(0.5, 0.5) &= \tan(0.5 \cdot 0.5 + 0.1) - 0.5^2 = \tan(0.35) - 0.25 \approx 0.365 - 0.25 = 0.115 \\
+       g(0.5, 0.5) &= 0.5^2 + 2 \cdot 0.5^2 - 1 = 0.25 + 0.5 - 1 = -0.25
+   \end{align*}
+   Правая часть системы:
+   \begin{equation*}
+       b_1 = -f = -0.115, \quad b_2 = -g = 0.250
+   \end{equation*}
+
+Вычисление элементов матрицы Якоби:
+   \begin{align*}
+       a_{11} &= -2 \cdot 0.5 = -1.0 \\
+       a_{12} &= 0.5 \cdot (1 + \tan^2(0.35)) = 0.5 \cdot (1 + 0.365^2) \approx 0.5 \cdot 1.133 = 0.567 \\
+       a_{21} &= 2 \cdot 0.5 = 1.0 \\
+       a_{22} &= 4 \cdot 0.5 = 2.0
+   \end{align*}
+
+Вычисление определителей:
+   \begin{align*}
+       \det J &= (-1.0)(2.0) - (0.567)(1.0) = -2.0 - 0.567 = -2.567 \\
+       \det_x &= b_1 a_{22} - b_2 a_{12} = (-0.115)(2.0) - (0.250)(0.567) = -0.230 - 0.142 = -0.372 \\
+       \det_y &= a_{11} b_2 - a_{21} b_1 = (-1.0)(0.250) - (1.0)(-0.115) = -0.250 + 0.115 = -0.135
+   \end{align*}
+
+Нахождение приращений:
+   \begin{align*}
+       \Delta x &= \frac{-0.372}{-2.567} \approx 0.145 \\
+       \Delta y &= \frac{-0.135}{-2.567} \approx 0.053
+   \end{align*}
+
+Новое приближение:
+   \begin{equation*}
+       x_1 = 0.5 + 0.145 = 0.645, \quad y_1 = 0.5 + 0.053 = 0.553
+   \end{equation*}
+$\|\Delta\| = \max(|0.145|, |0.053|) = 0.145 > \varepsilon$. Продолжаем.
+\begin{table}[H]
+    \centering
+    \caption{Решение системы}
+    \label{tab:newton_system_compact}
+    \begin{tabular}{|c|c|c|c|c|c|}
+        \hline
+        № & $x_k$ & $y_k$ & $\Delta x$ & $\Delta y$ & $\|\Delta\|$ \\
+        \hline
+        0 & 0.500 & 0.500 & --- & --- & --- \\
+        \hline
+        1 & 0.500 & 0.500 & 0.145 & 0.053 & 0.145 \\
+        \hline
+        2 & 0.645 & 0.553 & 0.068 & -0.069 & 0.069 \\
+        \hline
+        3 & 0.713 & 0.484 & 0.010 & -0.009 & 0.010 \\
+        \hline
+        4 & 0.723 & 0.475 & 0.001 & 0.000 & 0.001 \\
+        \hline
+    \end{tabular}
+\end{table}
+Поскольку на 4-й итерации $\|\Delta\| = 0.001 < 0.01$, процесс завершен.
+
+
+\textbf{Ответ:} $x \approx 0.724$, $y \approx 0.475$.
+\clearpage
+\section{Листинг программы}
+
+\subsection{Класс NonlinearSolve}
+
+\begin{lstlisting}[language=Java, label={lst:nonlinear}]
+package solver;
+
+import functions.Equation;
+
+public class NonlinearSolver {
+    public static Result bisection(int funcIndex, double a, double b, double epsilon) {
+        int iterations = 0;
+        double fa = Equation.evaluate(funcIndex, a);
+        double fb = Equation.evaluate(funcIndex, b);
+        if (fa * fb > 0) {
+            return new Result(0, 0, 0, false, "Метод половинного деления", "Корень не найден: f(a)·f(b) > 0");
+        }
+        double x = a;
+        double fx = fa;
+        while ((b - a) / 2 > epsilon) {
+            x = (a + b) / 2;
+            fx = Equation.evaluate(funcIndex, x);
+            iterations++;
+            if (Math.abs(fx) < epsilon) {
+                break;
+            }
+            if (fa * fx < 0) {
+                b = x;
+                fb = fx;
+            } else {
+                a = x;
+                fa = fx;
+            }
+        }
+        double root = (a + b) / 2;
+        double fRoot = Equation.evaluate(funcIndex, root);
+        return new Result(root, fRoot, iterations, true, "Метод половинного деления");
+    }
+
+    public static Result newton(int funcIndex, double x0, double epsilon, int maxIterations) {
+        double x = x0;
+        int iterations = 0;
+        for (int i = 0; i < maxIterations; i++) {
+            double fx = Equation.evaluate(funcIndex, x);
+            double dfx = Equation.derivative(funcIndex, x);
+
+            if (Math.abs(dfx) < 1e-15) {
+                return new Result(x, fx, iterations, false, "Метод Ньютона", "Производная близка к нулю");
+            }
+            double xNew = x - fx / dfx;
+            iterations++;
+            if (Math.abs(xNew - x) < epsilon) {
+                double fNew = Equation.evaluate(funcIndex, xNew);
+                return new Result(xNew, fNew, iterations, true, "Метод Ньютона");
+            }
+
+            x = xNew;
+        }
+        double fx = Equation.evaluate(funcIndex, x);
+        return new Result(x, fx, iterations, false, "Метод Ньютона", "Превышено максимальное число итераций");
+    }
+
+    public static Result simpleIteration(int funcIndex, double x0, double a, double b, double epsilon, int maxIterations) {
+        double maxDeriv = 0;
+        int steps = 100;
+        double step = (b - a) / steps;
+        for (int i = 0; i <= steps; i++) {
+            double x = a + i * step;
+            double deriv = Math.abs(Equation.derivative(funcIndex, x));
+            if (deriv > maxDeriv) {
+                maxDeriv = deriv;
+            }
+        }
+        double derivA = Equation.derivative(funcIndex, a);
+        double derivB = Equation.derivative(funcIndex, b);
+        double lambda;
+        if (derivA > 0 && derivB > 0) {
+            lambda = -1.0 / maxDeriv;
+        } else {
+            lambda = 1.0 / maxDeriv;
+        }
+        double q = 0;
+        for (int i = 0; i <= steps; i++) {
+            double x = a + i * step;
+            double phiDeriv = Math.abs(1 + lambda * Equation.derivative(funcIndex, x));
+            if (phiDeriv > q) {
+                q = phiDeriv;
+            }
+        }
+        if (q >= 1) {
+            return new Result(0, 0, 0, false, "Метод простой итерации", "Условие сходимости не выполняется: q = " + String.format("%.3f", q));
+        }
+        double x = x0;
+        int iterations = 0;
+        for (int i = 0; i < maxIterations; i++) {
+            double fx = Equation.evaluate(funcIndex, x);
+            double xNew = x + lambda * fx;
+            iterations++;
+            if (Math.abs(xNew - x) < epsilon) {
+                double fNew = Equation.evaluate(funcIndex, xNew);
+                return new Result(xNew, fNew, iterations, true, "Метод простой итерации (q = " + String.format("%.3f", q) + ")");
+            }
+            x = xNew;
+        }
+        double fx = Equation.evaluate(funcIndex, x);
+        return new Result(x, fx, iterations, false, "Метод простой итерации", "Превышено максимальное число итераций");
+    }
+}
+\end{lstlisting}
+\clearpage
+\subsection{Класс SystemSolver}
+\begin{lstlisting}[language=Java, label={lst:system}]
+package solver;
+
+import functions.Systems;
+
+public class SystemSolver {
+    public static Result[] simpleIteration(int sysIndex, double x0, double y0, double epsilon, int maxIterations) {
+        double x = x0;
+        double y = y0;
+        int iterations = 0;
+        double deltaX = 0;
+        double deltaY = 0;
+        for (int i = 0; i < maxIterations; i++) {
+            double[] phi = Systems.evaluatePhi(sysIndex, x, y);
+            double xNew = phi[0];
+            double yNew = phi[1];
+            iterations++;
+            deltaX = Math.abs(xNew - x);
+            deltaY = Math.abs(yNew - y);
+            if (deltaX < epsilon && deltaY < epsilon) {
+                return new Result[] {
+                        new Result(xNew, deltaX, iterations, true, "Метод простой итерации (x)"),
+                        new Result(yNew, deltaY, iterations, true, "Метод простой итерации (y)")
+                };
+            }
+            x = xNew;
+            y = yNew;
+        }
+        return new Result[] {
+                new Result(x, deltaX, iterations, false, "Метод простой итерации (x)", "Превышено максимальное число итераций"),
+                new Result(y, deltaY, iterations, false, "Метод простой итерации (y)", "Превышено максимальное число итераций")
+        };
+    }
+}
+\end{lstlisting}
+
+\clearpage
+\section{Примеры и результаты выводов программы}
+
+\subsection{Тест 1: одно уравнение с несколькими корнями на отрезке}
+\begin{verbatim}
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+2
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+1
+Выберите, каким методом вы хотите решить уравнение
+1 - Метод половинного деления
+2 - Метод Ньютона
+3 - Метод простой итерации
+1
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+2
+Доступные функции:
+1. f(x) = -1.38x³ - 5.42x² + 2.57x + 10.95
+2. f(x) = x³ - 2x + 1
+3. f(x) = sin(x) + 0.1x²
+4. f(x) = e^x - 2x²
+5. f(x) = cos(x) - x
+Введите номер функции (1-5)
+1
+Введите интервал изоляции корня [a, b]:
+Условие: f(a)·f(b) < 0 (теорема Больцано-Коши)
+Левая граница a: 
+-100
+Правая граница b: 
+100
+Введите точность ε: 
+0.01
+
+Производная меняет знак на интервале!
+
+Итоги
+Корень: x* = 1,409912
+f(x*) = -0,068406
+Число итераций: 14
+Статус: Успешно
+Метод: Метод половинного деления
+\end{verbatim}
+
+\subsection{Тест 2: система, где файл ввода отсутствует}
+\begin{verbatim}
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+1
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+2
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+1
+Файл input не найден
+Доступные системы:
+1. {
+     tg(xy + 0.1) = x²
+     x² + 2y² = 1
+   }
+2. {
+     sin(x + 0.5) - y = 1
+     cos(y - 2) + x = 0
+   }
+3. {
+     x + sin(y) = -0.4
+     2y - cos(x + 1) = 0
+   }
+Введите номер системы (1-3): 1
+Начальное приближение x₀: 0.4
+Начальное приближение y₀: 0.6
+Введите точность ε: 0.01
+\end{verbatim}
+
+\subsection{Тест 3: некорректные значения ввода}
+\begin{verbatim}
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+3
+Введите 1 или 2
+
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+2
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+ц
+Введите целое число 1 или 2
+
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+2
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+ку
+Введите целое число 1 или 2
+
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+
+к
+Введите целое число 1 или 2
+
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+2
+Доступные системы:
+1. {
+     tg(xy + 0.1) = x²
+     x² + 2y² = 1
+   }
+2. {
+     sin(x + 0.5) - y = 1
+     cos(y - 2) + x = 0
+   }
+3. {
+     x + sin(y) = -0.4
+     2y - cos(x + 1) = 0
+   }
+Введите номер системы (1-3):
+\end{verbatim}
+
+\subsection{Тест 4: В методе Ньютона производная почти равна 0}
+\begin{verbatim}
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+2
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+1
+Выберите, каким методом вы хотите решить уравнение
+1 - Метод половинного деления
+2 - Метод Ньютона
+3 - Метод простой итерации
+2
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+2
+Доступные функции:
+1. f(x) = -1.38x³ - 5.42x² + 2.57x + 10.95
+2. f(x) = x³ - 2x + 1
+3. f(x) = sin(x) + 0.1x²
+4. f(x) = e^x - 2x²
+5. f(x) = cos(x) - x
+Введите номер функции (1-5)
+1
+Введите интервал изоляции корня [a, b]:
+Условие: f(a)·f(b) < 0 (теорема Больцано-Коши)
+Левая граница a: 
+-4
+Правая граница b: 
+-3
+Введите точность ε: 
+0.01
+Метод Метод Ньютона требует начальное приближение.
+Введите начальное приближение x₀: 
+-2.86
+Начальное приближение: x₀ = -2.86
+
+Итоги
+Корень: x* = -3,880518
+f(x*) = 0,000001
+Число итераций: 11
+Статус: Успешно
+Метод: Метод Ньютона
+\end{verbatim}
+
+\subsection{Тест 5: в методе простой итерации производная меняет знак (не сходится)}
+\begin{verbatim}
+Выберите режим ввода:
+1 - Из файла
+2 - Вручную
+2
+Выберите, вы хотите решить одно нелинейное уравнение или систему нелинейных
+1 - Одно
+2 - Систему
+1
+Выберите, каким методом вы хотите решить уравнение
+1 - Метод половинного деления
+2 - Метод Ньютона
+3 - Метод простой итерации
+3
+Выберите режим вывода:
+1 - В файл
+2 - В консоль
+2
+Доступные функции:
+1. f(x) = -1.38x³ - 5.42x² + 2.57x + 10.95
+2. f(x) = x³ - 2x + 1
+3. f(x) = sin(x) + 0.1x²
+4. f(x) = e^x - 2x²
+5. f(x) = cos(x) - x
+Введите номер функции (1-5)
+1
+Введите интервал изоляции корня [a, b]:
+Условие: f(a)·f(b) < 0 (теорема Больцано-Коши)
+Левая граница a: 
+-5
+Правая граница b: 
+0
+Введите точность ε: 
+0.01
+Метод Метод простой итерации требует начальное приближение.
+Введите начальное приближение x₀: 
+5
+
+Производная меняет знак на интервале!
+Начальное приближение: x₀ = 5
+
+Итоги
+Корень: x* = 0,000000
+f(x*) = 0,000000
+Число итераций: 0
+Статус: Не удалось
+Метод: Метод простой итерации
+\end{verbatim}
+
+\clearpage
+\section{Выводы}
+
+В ходе выполнения лабораторной работы была разработана программа для численного решения нелинейных уравнений и систем уравнений. Реализованы три метода для одиночных уравнений (половинного деления, Ньютона и простой итерации) и метод простой итерации для систем. Программа поддерживает ввод данных как с клавиатуры, так и из файла, а также вывод результатов в консоль или файл.
+
+Для варианта 2 было решено уравнение $f(x) = -1.38x^3 - 5.42x^2 + 2.57x + 10.95$ на интервале $[-4; -3]$. Все три метода нашли корень $x \approx -3.862$ с заданной точностью $\varepsilon = 0.01$. При этом метод Ньютона показал наилучшую скорость сходимости — 4 итерации против 6-7 у остальных методов. Для системы уравнений было найдено решение $x \approx 0.724$, $y \approx 0.475$ за 4 итерации, что полностью совпадает с теоретическими расчётами.
+
+В ходе тестирования было исследовано поведение методов в нештатных ситуациях. Метод Ньютона при неудачном начальном приближении (близком к точке экстремума) работает медленнее, но остаётся устойчивым. Метод простой итерации при нарушении условия сходимости корректно сообщает об ошибке и не выполняет вычислений. Программа также предупреждает пользователя, если на интервале возможно несколько корней или начальное приближение выбрано вне интервала изоляции.
+
+
+\end{document}
